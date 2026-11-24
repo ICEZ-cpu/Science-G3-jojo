@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMPROVE CLASS — Stage 3 Science Interactive Module</title>
+  <style>
+    /* =========================================================
+       IMPROVE CLASS - Offline-Ready Design System
+       ========================================================= */
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --secondary: #0ea5e9;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0ea5e9 100%);
+      color: #ffffff;
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-lg);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+      backdrop-filter: blur(6px);
+    }
+
+    .brand-text h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .author-badge {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    /* Navigation Tabs */
+    .main-tabs {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      background: var(--surface);
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1.25rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Topic Filter Pills */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-pill {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-pill.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Study Cards Grid */
+    .study-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      padding: 1.1rem 1.25rem;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .card-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .svg-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .svg-box svg {
+      width: 100%;
+      height: auto;
+      max-height: 240px;
+      display: block;
+    }
+
+    .key-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+    }
+
+    .key-points li {
+      padding-left: 1.35rem;
+      position: relative;
+    }
+
+    .key-points li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .key-points strong {
+      color: var(--text);
+    }
+
+    /* Comparison Table */
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .mini-table th, .mini-table td {
+      padding: 0.5rem 0.65rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mini-table th {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .mini-table td:first-child {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* =========================================================
+       QUIZ SECTION
+       ========================================================= */
+    .quiz-topbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 82px;
+      z-index: 40;
+    }
+
+    .quiz-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .stat-chip {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .stat-chip.timer {
+      background: var(--warning-bg);
+      color: var(--warning);
+      border-color: #fde68a;
+    }
+
+    .stat-chip.score {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-color: #bfdbfe;
+    }
+
+    .btn {
+      padding: 0.65rem 1.2rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: var(--surface-alt);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .quiz-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .q-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    .q-text {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .opt-btn {
+      text-align: left;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .opt-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-btn.correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: #14532d;
+    }
+
+    .opt-btn.wrong {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: #7f1d1d;
+    }
+
+    .q-feedback {
+      margin-top: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .q-feedback.show {
+      display: block;
+    }
+
+    .q-feedback.ok {
+      background: var(--success-bg);
+      color: #14532d;
+      border: 1px solid #86efac;
+    }
+
+    .q-feedback.bad {
+      background: var(--danger-bg);
+      color: #7f1d1d;
+      border: 1px solid #fca5a5;
+    }
+
+    /* Summary Box */
+    .summary-card {
+      background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      display: none;
+    }
+
+    .summary-card.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .summary-grade {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.1;
+      margin: 0.5rem 0;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.88rem;
+      margin-top: auto;
+    }
+
+    footer strong {
+      color: #ffffff;
+    }
+
+    @media (max-width: 640px) {
+      .study-grid {
+        grid-template-columns: 1fr;
+      }
+      .quiz-topbar {
+        top: 0;
+        position: static;
+      }
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-logo">IC</div>
+        <div class="brand-text">
+          <h1>IMPROVE CLASS</h1>
+          <p>Stage 3 Science • Cambridge Primary Interactive Module</p>
+        </div>
+      </div>
+      <div class="author-badge">Made by Sujato Andika Nanda</div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Main Navigation Tabs -->
+    <div class="main-tabs" role="tablist">
+      <button class="tab-btn active" onclick="switchTab('study', this)" role="tab">
+        📚 Study Materials &amp; HD Illustrations
+      </button>
+      <button class="tab-btn" onclick="switchTab('quiz', this)" role="tab">
+        📝 Interactive Quiz (30 Questions)
+      </button>
+    </div>
+
+    <!-- =========================================================
+         TAB 1: STUDY MATERIALS & HD ILLUSTRATIONS
+         ========================================================= -->
+    <section id="tab-study" class="tab-panel active">
+      <div class="filter-bar">
+        <button class="filter-pill active" onclick="filterTopics('all', this)">All Topics</button>
+        <button class="filter-pill" onclick="filterTopics('ch5', this)">Chapter 5: States of Matter</button>
+        <button class="filter-pill" onclick="filterTopics('ch6', this)">Chapter 6: Mixtures &amp; Separation</button>
+        <button class="filter-pill" onclick="filterTopics('review', this)">Mid-Year Review</button>
+      </div>
+
+      <div class="study-grid" id="studyGrid">
+
+        <!-- CARD 1: Ch5 Weather States -->
+        <article class="card" data-topic="ch5">
+          <div class="card-header">
+            <h2 class="card-title">1. Different States of Weather</h2>
+            <span class="card-badge">Chapter 5</span>
+          </div>
+          <div class="card-body">
+            <div class="svg-box">
+              <svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+                <rect width="420" height="180" rx="12" fill="#f0f9ff"/>
+                <!-- Rain (Liquid) -->
+                <g transform="translate(15,15)">
+                  <rect width="120" height="150" rx="10" fill="#ffffff" stroke="#bae6fd" stroke-width="2"/>
+                  <path d="M35 45 C25 45 20 35 28 28 C30 18 45 15 55 22 C65 15 80 22 78 34 C86 38 82 48 72 48 Z" fill="#64748b"/>
+                  <path d="M40 65 Q35 80 40 85 Q45 80 40 65 Z" fill="#0284c7"/>
+                  <path d="M60 72 Q55 87 60 92 Q65 87 60 72 Z" fill="#0284c7"/>
+                  <path d="M78 62 Q73 77 78 82 Q83 77 78 62 Z" fill="#0284c7"/>
+                  <text x="60" y="118" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Rain</text>
+                  <text x="60" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="#0284c7">LIQUID</text>
+                </g>
+                <!-- Hailstones (Solid) -->
+                <g transform="translate(150,15)">
+                  <rect width="120" height="150" rx="10" fill="#ffffff" stroke="#bae6fd" stroke-width="2"/>
+                  <path d="M35 45 C25 45 20 35 28 28 C30 18 45 15 55 22 C65 15 80 22 78 34 C86 38 82 48 72 48 Z" fill="#475569"/>
+                  <polygon points="40,65 48,70 45,80 35,78" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+                  <polygon points="65,72 74,76 71,86 61,83" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+                  <polygon points="52,90 59,95 55,103 47,99" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+                  <text x="60" y="118" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Hailstones</text>
+                  <text x="60" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="#475569">SOLID (Ice)</text>
+                </g>
+                <!-- Wind (Gas) -->
+                <g transform="translate(285,15)">
+                  <rect width="120" height="150" rx="10" fill="#ffffff" stroke="#bae6fd" stroke-width="2"/>
+                  <path d="M20 45 Q55 45 75 35 Q88 28 82 20 Q75 15 68 22" fill="none" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M15 65 Q65 65 90 55 Q102 50 98 42" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M25 85 Q60 85 78 92 Q88 96 82 104" fill="none" stroke="#7dd3fc" stroke-width="4" stroke-linecap="round"/>
+                  <text x="60" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Strong Wind</text>
+                  <text x="60" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#0ea5e9">GAS (Air)</text>
+                </g>
+              </svg>
+            </div>
+            <ul class="key-points">
+              <li><strong>Rain (Liquid):</strong> Made of water droplets that can flow.</li>
+              <li><strong>Hailstones (Solid):</strong> Balls of ice that fall from the sky with a fixed shape.</li>
+              <li><strong>Strong Wind (Gas):</strong> Fast-moving air around us.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- CARD 2: Ch5 Properties & Iceberg -->
+        <article class="card" data-topic="ch5">
+          <div class="card-header">
+            <h2 class="card-title">2. Properties &amp; Iceberg in the Sea</h2>
+            <span class="card-badge">Chapter 5</span>
+          </div>
+          <div class="card-body">
+            <div class="svg-box">
+              <svg viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg">
+                <!-- Sky (Gas) -->
+                <rect width="420" height="95" fill="#e0f2fe"/>
+                <!-- Sea (Liquid) -->
+                <rect y="95" width="420" height="95" fill="#0284c7"/>
+                <!-- Iceberg (Solid) -->
+                <polygon points="150,95 185,35 235,28 275,95" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+                <polygon points="150,95 165,155 215,172 260,145 275,95" fill="#bae6fd" stroke="#0369a1" stroke-width="2"/>
+                <!-- Labels -->
+                <rect x="20" y="20" width="95" height="28" rx="6" fill="#ffffff" stroke="#0ea5e9"/>
+                <text x="67" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#0369a1">GAS (Air)</text>
+
+                <rect x="295" y="40" width="105" height="28" rx="6" fill="#ffffff" stroke="#64748b"/>
+                <text x="347" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">SOLID (Ice)</text>
+                <line x1="295" y1="54" x2="250" y2="60" stroke="#0f172a" stroke-width="2"/>
+
+                <rect x="295" y="130" width="105" height="28" rx="6" fill="#ffffff" stroke="#0284c7"/>
+                <text x="347" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#0284c7">LIQUID (Sea)</text>
+              </svg>
+            </div>
+            <table class="mini-table">
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>Fixed Shape</th>
+                  <th>Fixed Volume</th>
+                  <th>Can Flow</th>
+                  <th>Compressible</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Solid (Lollipop, Ball)</td>
+                  <td>✓ Yes</td>
+                  <td>✓ Yes</td>
+                  <td>✗ No</td>
+                  <td>✗ No</td>
+                </tr>
+                <tr>
+                  <td>Liquid (Water, Honey, Oil)</td>
+                  <td>✗ No</td>
+                  <td>✓ Yes</td>
+                  <td>✓ Yes</td>
+                  <td>✗ No</td>
+                </tr>
+                <tr>
+                  <td>Gas (Air, Wind)</td>
+                  <td>✗ No</td>
+                  <td>✗ No</td>
+                  <td>✓ Yes</td>
+                  <td>✓ Yes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- CARD 3: Ch5 Marbles vs Water -->
+        <article class="card" data-topic="ch5">
+          <div class="card-header">
+            <h2 class="card-title">3. Marbles vs Water in Containers</h2>
+            <span class="card-badge">Chapter 5</span>
+          </div>
+          <div class="card-body">
+            <div class="svg-box">
+              <svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+                <rect width="420" height="180" rx="12" fill="#f8fafc"/>
+                <!-- Beaker 1: Marbles -->
+                <g transform="translate(55,20)">
+                  <path d="M10 10 L10 120 Q10 130 20 130 L90 130 Q100 130 100 120 L100 10" fill="#ffffff" stroke="#475569" stroke-width="3"/>
+                  <circle cx="30" cy="112" r="14" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                  <circle cx="58" cy="112" r="14" fill="#64748b" stroke="#334155" stroke-width="2"/>
+                  <circle cx="83" cy="112" r="14" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                  <circle cx="43" cy="86" r="14" fill="#cbd5e1" stroke="#334155" stroke-width="2"/>
+                  <circle cx="72" cy="86" r="14" fill="#94a3b8" stroke="#334155" stroke-width="2"/>
+                  <text x="55" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Marbles (Gaps!)</text>
+                </g>
+                <!-- Beaker 2: Water -->
+                <g transform="translate(245,20)">
+                  <path d="M10 10 L10 120 Q10 130 20 130 L90 130 Q100 130 100 120 L100 10" fill="#ffffff" stroke="#475569" stroke-width="3"/>
+                  <path d="M12 65 L98 65 L98 120 Q98 128 90 128 L20 128 Q12 128 12 120 Z" fill="#38bdf8" opacity="0.8"/>
+                  <text x="55" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#0284c7">Water (No Gaps)</text>
+                </g>
+              </svg>
+            </div>
+            <ul class="key-points">
+              <li><strong>Marbles (Solid):</strong> Cannot fill a beaker without gaps because marbles have a <strong>fixed shape</strong>.</li>
+              <li><strong>Water (Liquid):</strong> Fills the beaker without gaps because water <strong>does not have a fixed shape</strong> and takes the shape of its container.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- CARD 4: Ch6 Mixtures & Dissolving -->
+        <article class="card" data-topic="ch6">
+          <div class="card-header">
+            <h2 class="card-title">4. Mixtures, Solute &amp; Solvent</h2>
+            <span class="card-badge">Chapter 6</span>
+          </div>
+          <div class="card-body">
+            <div class="svg-box">
+              <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg">
+                <rect width="420" height="170" rx="12" fill="#f0fdf4"/>
+                <!-- Sugar Cube -->
+                <rect x="25" y="55" width="45" height="45" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+                <text x="47" y="120" text-anchor="middle" font-size="11" font-weight="700" fill="#0f172a">Sugar (10 g)</text>
+                <text x="47" y="135" text-anchor="middle" font-size="10" font-weight="700" fill="#16a34a">SOLUTE</text>
+                <text x="95" y="85" font-size="22" font-weight="800" fill="#475569">+</text>
+                <!-- Water -->
+                <path d="M120 40 L120 105 Q120 112 127 112 L173 112 Q180 112 180 105 L180 40" fill="#ffffff" stroke="#475569" stroke-width="2.5"/>
+                <rect x="122" y="60" width="56" height="50" fill="#38bdf8" opacity="0.75"/>
+                <text x="150" y="128" text-anchor="middle" font-size="11" font-weight="700" fill="#0f172a">Water (330 g)</text>
+                <text x="150" y="143" text-anchor="middle" font-size="10" font-weight="700" fill="#0284c7">SOLVENT</text>
+                <text x="205" y="85" font-size="22" font-weight="800" fill="#475569">=</text>
+                <!-- Sugar Water -->
+                <path d="M240 40 L240 105 Q240 112 247 112 L313 112 Q320 112 320 105 L320 40" fill="#ffffff" stroke="#475569" stroke-width="2.5"/>
+                <rect x="242" y="55" width="76" height="55" fill="#7dd3fc" opacity="0.85"/>
+                <text x="280" y="128" text-anchor="middle" font-size="11" font-weight="700" fill="#0f172a">Sugar Water (340 g)</text>
+                <text x="280" y="143" text-anchor="middle" font-size="10" font-weight="700" fill="#16a34a">MIXTURE (Dissolved)</text>
+              </svg>
+            </div>
+            <ul class="key-points">
+              <li><strong>Mixture:</strong> Two or more materials mixed together (e.g., rice &amp; salt, nuts &amp; raisins). Materials <strong>retain their properties</strong>.</li>
+              <li><strong>Soluble vs Insoluble:</strong> <strong>Salt &amp; brown sugar</strong> dissolve in water (soluble). <strong>Sand &amp; black pepper</strong> do not dissolve (insoluble).</li>
+              <li><strong>Conservation of Mass:</strong> 330 g water + 10 g sugar = <strong>340 g</strong> sugar water!</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- CARD 5: Ch6 Separating Mixtures -->
+        <article class="card" data-topic="ch6">
+          <div class="card-header">
+            <h2 class="card-title">5. Separating Mixtures &amp; Water Filters</h2>
+            <span class="card-badge">Chapter 6</span>
+          </div>
+          <div class="card-body">
+            <div class="svg-box">
+              <svg viewBox="0 0 420 185" xmlns="http://www.w3.org/2000/svg">
+                <rect width="420" height="185" rx="12" fill="#f8fafc"/>
+                <!-- Sieve -->
+                <g transform="translate(15,15)">
+                  <rect width="120" height="155" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                  <ellipse cx="60" cy="55" rx="40" ry="14" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+                  <line x1="35" y1="55" x2="85" y2="55" stroke="#475569" stroke-dasharray="3,3"/>
+                  <circle cx="50" cy="48" r="5" fill="#f59e0b"/>
+                  <circle cx="70" cy="48" r="5" fill="#f59e0b"/>
+                  <circle cx="60" cy="85" r="2" fill="#64748b"/>
+                  <circle cx="52" cy="95" r="2" fill="#64748b"/>
+                  <text x="60" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Sieve</text>
+                  <text x="60" y="142" text-anchor="middle" font-size="10" fill="#475569">By Size (Salt/Rice)</text>
+                </g>
+                <!-- Magnet -->
+                <g transform="translate(150,15)">
+                  <rect width="120" height="155" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                  <path d="M40 75 L40 45 A20 20 0 0 1 80 45 L80 75" fill="none" stroke="#dc2626" stroke-width="12"/>
+                  <rect x="34" y="70" width="12" height="12" fill="#94a3b8"/>
+                  <rect x="74" y="70" width="12" height="12" fill="#94a3b8"/>
+                  <text x="60" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Magnet</text>
+                  <text x="60" y="142" text-anchor="middle" font-size="10" fill="#475569">Steel vs Plastic</text>
+                </g>
+                <!-- Multi-layer Filter -->
+                <g transform="translate(285,15)">
+                  <rect width="120" height="155" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                  <rect x="35" y="25" width="50" height="20" fill="#64748b"/>
+                  <rect x="35" y="45" width="50" height="18" fill="#94a3b8"/>
+                  <rect x="35" y="63" width="50" height="18" fill="#fde047"/>
+                  <line x1="35" y1="83" x2="85" y2="83" stroke="#d97706" stroke-width="3"/>
+                  <path d="M60 88 L60 105" stroke="#38bdf8" stroke-width="3"/>
+                  <text x="60" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Filter B</text>
+                  <text x="60" y="142" text-anchor="middle" font-size="10" fill="#475569">Stones, Sand &amp; Paper</text>
+                </g>
+              </svg>
+            </div>
+            <ul class="key-points">
+              <li><strong>Sieve:</strong> Separates solids of different sizes (e.g., salt &amp; rice; 1 cm, 2 cm, 3 cm beads).</li>
+              <li><strong>Magnet:</strong> Separates magnetic materials (<strong>steel</strong>) from non-magnetic materials (<strong>plastic</strong>).</li>
+              <li><strong>Filtration:</strong> Separates insoluble solids from liquids (e.g., orange juice pulp/seeds, or <strong>Filter B</strong> with sand &amp; coffee filter paper).</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- CARD 6: Mid-Year Review: Forces & Magnets -->
+        <article class="card" data-topic="review">
+          <div class="card-header">
+            <h2 class="card-title">6. Forces (Friction) &amp; Magnets</h2>
+            <span class="card-badge">Mid-Year Review</span>
+          </div>
+          <div class="card-body">
+            <div class="svg-box">
+              <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg">
+                <rect width="420" height="170" rx="12" fill="#fffbeb"/>
+                <!-- Friction -->
+                <g transform="translate(15,20)">
+                  <line x1="10" y1="95" x2="185" y2="95" stroke="#78350f" stroke-width="4"/>
+                  <rect x="70" y="65" width="55" height="28" rx="4" fill="#64748b"/>
+                  <line x1="130" y1="79" x2="175" y2="79" stroke="#16a34a" stroke-width="3"/>
+                  <polygon points="175,74 185,79 175,84" fill="#16a34a"/>
+                  <text x="155" y="68" text-anchor="middle" font-size="10" font-weight="700" fill="#16a34a">Motion</text>
+                  <line x1="65" y1="79" x2="20" y2="79" stroke="#dc2626" stroke-width="3"/>
+                  <polygon points="20,74 10,79 20,84" fill="#dc2626"/>
+                  <text x="38" y="68" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">Friction</text>
+                  <text x="97" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Friction Opposes Motion</text>
+                </g>
+                <!-- Magnets -->
+                <g transform="translate(225,25)">
+                  <rect x="10" y="30" width="40" height="28" fill="#dc2626"/>
+                  <rect x="50" y="30" width="40" height="28" fill="#2563eb"/>
+                  <text x="30" y="49" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">N</text>
+                  <text x="70" y="49" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">S</text>
+
+                  <rect x="105" y="30" width="40" height="28" fill="#dc2626"/>
+                  <rect x="145" y="30" width="40" height="28" fill="#2563eb"/>
+                  <text x="125" y="49" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">N</text>
+                  <text x="165" y="49" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">S</text>
+                  <text x="97" y="85" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">Unlike poles (S &amp; N) ATTRACT</text>
+                  <text x="97" y="105" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">Like poles (N &amp; N) REPEL</text>
+                </g>
+              </svg>
+            </div>
+            <ul class="key-points">
+              <li><strong>Friction:</strong> A force that slows down a moving object and acts in the <strong>opposite direction</strong> of movement.</li>
+              <li><strong>Magnets:</strong> Have a <strong>North (N)</strong> and <strong>South (S)</strong> pole. Unlike poles attract; like poles repel.</li>
+              <li><strong>Magnetic Materials:</strong> An object attracted to a magnet can be a magnet OR a magnetic metal (like steel/iron).</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- CARD 7: Mid-Year Review: Living Things, Fossils & Plants -->
+        <article class="card" data-topic="review">
+          <div class="card-header">
+            <h2 class="card-title">7. Living Things, Fossils &amp; Plant Roots</h2>
+            <span class="card-badge">Mid-Year Review</span>
+          </div>
+          <div class="card-body">
+            <div class="svg-box">
+              <svg viewBox="0 0 420 170" xmlns="http://www.w3.org/2000/svg">
+                <rect width="420" height="170" rx="12" fill="#f0fdf4"/>
+                <!-- Plant A (With Roots) -->
+                <g transform="translate(40,20)">
+                  <rect x="15" y="45" width="60" height="75" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+                  <rect x="17" y="75" width="56" height="43" fill="#38bdf8" opacity="0.7"/>
+                  <line x1="45" y1="20" x2="45" y2="95" stroke="#16a34a" stroke-width="3"/>
+                  <ellipse cx="35" cy="30" rx="10" ry="5" fill="#22c55e"/>
+                  <ellipse cx="55" cy="30" rx="10" ry="5" fill="#22c55e"/>
+                  <path d="M45 95 L35 110 M45 95 L45 114 M45 95 L55 110" stroke="#78350f" stroke-width="2"/>
+                  <text x="45" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#0f172a">Plant A (Roots)</text>
+                </g>
+                <!-- Plant B (No Roots) -->
+                <g transform="translate(150,20)">
+                  <rect x="15" y="45" width="60" height="75" fill="#ffffff" stroke="#475569" stroke-width="2"/>
+                  <rect x="17" y="60" width="56" height="58" fill="#38bdf8" opacity="0.7"/>
+                  <line x1="45" y1="20" x2="45" y2="80" stroke="#16a34a" stroke-width="3"/>
+                  <ellipse cx="35" cy="30" rx="10" ry="5" fill="#22c55e"/>
+                  <ellipse cx="55" cy="30" rx="10" ry="5" fill="#22c55e"/>
+                  <text x="45" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">Plant B (No Roots)</text>
+                </g>
+                <!-- Classification Box -->
+                <g transform="translate(260,25)">
+                  <rect width="140" height="120" rx="8" fill="#ffffff" stroke="#bbf7d0" stroke-width="2"/>
+                  <text x="70" y="22" text-anchor="middle" font-size="11" font-weight="800" fill="#16a34a">CLASSIFICATION</text>
+                  <text x="12" y="45" font-size="10" font-weight="700" fill="#0f172a">• Living: Tree, Caterpillar</text>
+                  <text x="12" y="68" font-size="10" font-weight="700" fill="#0f172a">• Once Alive: Book, Bone</text>
+                  <text x="12" y="91" font-size="10" font-weight="700" fill="#0f172a">• Never Lived: Clip, Sand</text>
+                </g>
+              </svg>
+            </div>
+            <ul class="key-points">
+              <li><strong>Fair Testing:</strong> Keep all other variables the same (leaves, water, oil layer) except the one being tested (roots).</li>
+              <li><strong>Function of Roots:</strong> Roots absorb water. Plant B (without roots) will wilt and die after 10 days.</li>
+              <li><strong>Fossils:</strong> Remains/imprints of ancient living things (fish, starfish, leaves) preserved in rock.</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 2: INTERACTIVE QUIZ (30 QUESTIONS)
+         ========================================================= -->
+    <section id="tab-quiz" class="tab-panel">
+      <div class="quiz-topbar">
+        <div class="quiz-stats">
+          <div class="stat-chip timer" id="timerDisplay">⏱️ 60:00</div>
+          <div class="stat-chip score" id="scoreDisplay">🏆 Score: 0 / 30</div>
+          <div class="stat-chip" id="progressDisplay">📝 Answered: 0 / 30</div>
+        </div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="initQuiz()">🔀 Shuffle &amp; Restart</button>
+          <button class="btn btn-primary" onclick="finishQuiz()">✅ Finish &amp; Grade</button>
+        </div>
+      </div>
+
+      <!-- Final Score Summary -->
+      <div class="summary-card" id="summaryCard">
+        <h2>Quiz Completed!</h2>
+        <div class="summary-grade" id="summaryGrade">A+</div>
+        <p id="summaryText" style="font-size:1.1rem; font-weight:600; margin-bottom:1rem;"></p>
+        <button class="btn btn-primary" onclick="initQuiz()">🔄 Try Again (New Order)</button>
+      </div>
+
+      <!-- Questions Container -->
+      <div class="quiz-list" id="quizList"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>IMPROVE CLASS</strong> • Stage 3 Science Interactive Learning Module • <strong>Made by Sujato Andika Nanda</strong></p>
+  </footer>
+
+  <!-- =========================================================
+       JAVASCRIPT: TABS, FILTERS, QUIZ ENGINE & 30 QUESTIONS
+       ========================================================= -->
+  <script>
+    // 1. Tab Switching
+    function switchTab(tabName, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // 2. Topic Filtering
+    function filterTopics(topic, btn) {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#studyGrid .card').forEach(card => {
+        if (topic === 'all' || card.dataset.topic === topic) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 3. 30-Question Bank (Covering all uploaded worksheets)
+    const QUESTION_BANK = [
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "Rain is made up of water droplets. Which state of matter is rain?",
+        options: ["Liquid", "Solid", "Gas", "Plasma"],
+        answer: "Liquid",
+        exp: "Rain is liquid water that can flow and take the shape of a container."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "Hailstones are balls of ice that fall from the sky. What state of matter are hailstones?",
+        options: ["Solid", "Liquid", "Gas", "Mixture"],
+        answer: "Solid",
+        exp: "Ice is water in its solid state with a fixed shape and fixed volume."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "A strong wind is fast-moving air. Which state of matter is wind?",
+        options: ["Gas", "Liquid", "Solid", "Solution"],
+        answer: "Gas",
+        exp: "Air and wind are gases; they have no fixed shape or fixed volume."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "Which of the following properties is TRUE for ALL solids?",
+        options: ["Fixed shape and fixed volume", "Can flow easily", "Takes the shape of the container", "Can be compressed easily"],
+        answer: "Fixed shape and fixed volume",
+        exp: "Solids have a fixed shape, fixed volume, cannot flow, and cannot be compressed."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "Honey can flow and takes the shape of the jar it is in. What state of matter is honey?",
+        options: ["Liquid", "Solid", "Gas", "Solute"],
+        answer: "Liquid",
+        exp: "Honey has a fixed volume, no fixed shape, and can flow—so it is a liquid."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "In a picture of an iceberg floating in the sea, what are the three states of matter shown?",
+        options: ["Solid (iceberg), Liquid (sea), Gas (air)", "Solid (sea), Liquid (air), Gas (iceberg)", "Only Solid and Liquid", "Only Liquid and Gas"],
+        answer: "Solid (iceberg), Liquid (sea), Gas (air)",
+        exp: "The iceberg is solid ice, the sea is liquid water, and the air above is gas."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "Why can marbles NOT fill up a beaker without leaving gaps?",
+        options: ["Because marbles have a fixed shape", "Because marbles are liquids", "Because marbles can flow", "Because marbles have no fixed volume"],
+        answer: "Because marbles have a fixed shape",
+        exp: "Marbles are solids with a fixed round shape, so air gaps remain between them."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "Ravi puts an object into a sealed syringe and cannot push the plunger in. When poured, its shape changes. What is the object?",
+        options: ["A liquid", "A solid", "A gas", "A magnet"],
+        answer: "A liquid",
+        exp: "Cannot be compressed (fixed volume) + shape changes when poured = Liquid."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "If you pour 100 ml of juice from a beaker into a conical flask, what happens to its volume?",
+        options: ["It stays 100 ml (fixed volume)", "It increases to 150 ml", "It decreases to 50 ml", "It disappears"],
+        answer: "It stays 100 ml (fixed volume)",
+        exp: "Liquids have a fixed volume even though their shape changes to match the container."
+      },
+      {
+        topic: "Chapter 5: States of Matter",
+        q: "Which statement is FALSE?",
+        options: ["Both solids and liquids have fixed shapes", "Liquids can flow", "Both solids and liquids have fixed volumes", "All solids cannot flow"],
+        answer: "Both solids and liquids have fixed shapes",
+        exp: "Only solids have a fixed shape; liquids take the shape of their container."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "Which of the following is a MIXTURE?",
+        options: ["Rice and salt", "Pure sugar", "Chalk", "Pure water"],
+        answer: "Rice and salt",
+        exp: "Rice and salt are two different materials mixed together."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "Which of these solids are SOLUBLE (can dissolve) in water?",
+        options: ["Salt and brown sugar", "Sand and black pepper", "Chalk and sand", "Marbles and stones"],
+        answer: "Salt and brown sugar",
+        exp: "Salt and brown sugar dissolve in water, while sand and black pepper are insoluble."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "When Vera stirs a sugar cube into water until she cannot see it, the sugar is the:",
+        options: ["Solute", "Solvent", "Filter", "Sieve"],
+        answer: "Solute",
+        exp: "The substance that dissolves (sugar) is the solute; the liquid (water) is the solvent."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "How can Vera tell that sugar is still present in the water even though she cannot see it?",
+        options: ["Weigh or taste the water", "Look through a magnifying glass", "Use a magnet", "Use a sieve"],
+        answer: "Weigh or taste the water",
+        exp: "The water will taste sweet, and its mass will equal water + sugar."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "If the water is 330 g and the sugar cube is 10 g, how heavy will the sugar water be?",
+        options: ["340 g", "320 g", "330 g", "350 g"],
+        answer: "340 g",
+        exp: "Mass is conserved when dissolving: 330 g + 10 g = 340 g."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "Coco mixes chocolates and jelly beans in a bowl. Their shapes and hardness do not change. This shows that:",
+        options: ["Materials retain their properties in a mixture", "Materials melt in a mixture", "Materials disappear in a mixture", "Materials turn into liquids"],
+        answer: "Materials retain their properties in a mixture",
+        exp: "In a mixture, each material keeps its own properties."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "How can Tim separate a mixture of salt and rice grains?",
+        options: ["Use a sieve", "Use a magnet", "Add sand", "Freeze the mixture"],
+        answer: "Use a sieve",
+        exp: "Fine salt passes through the sieve holes while larger rice grains stay on top."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "Tim has plastic clips and steel clips of the SAME size. Why can't he use a sieve to separate them?",
+        options: ["Because the clips have the same size", "Because steel is too light", "Because plastic dissolves", "Because sieves only work on liquids"],
+        answer: "Because the clips have the same size",
+        exp: "Sieving separates by size; since both clips are the same size, a magnet should be used."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "How can Tim quickly separate steel clips from plastic clips?",
+        options: ["Use a magnet", "Use a sieve", "Add water", "Use filter paper"],
+        answer: "Use a magnet",
+        exp: "Steel is magnetic and is attracted to the magnet, while plastic is not."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "Cyrus has 3 cm foam balls, 2 cm wooden balls, and 1 cm craft beads. Which sieve should he NOT use if he wants to separate them?",
+        options: ["Sieve C (3 cm holes)", "Sieve A (1 cm holes)", "Sieve B (2 cm holes)", "None of them"],
+        answer: "Sieve C (3 cm holes)",
+        exp: "3 cm holes are as big as the largest ball and bigger than the others, so everything falls through."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "To obtain 1 cm craft beads first, then 2 cm wooden balls, then 3 cm foam balls, in what order should Cyrus use the sieves?",
+        options: ["A - B - C", "C - B - A", "B - A - C", "C - A - B"],
+        answer: "A - B - C",
+        exp: "Start with the smallest holes (A: 1 cm) to catch/separate the smallest, then B (2 cm), then C (3 cm)."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "Why is Filter B (stones, pebbles, sand, and coffee filter paper) better than Filter A (only stones and pebbles)?",
+        options: ["Sand and filter paper trap finer dirt particles", "Filter B has larger holes", "Filter B uses a magnet", "Filter A has too much sand"],
+        answer: "Sand and filter paper trap finer dirt particles",
+        exp: "Finer layers like sand and coffee filter paper trap tiny impurities that pass through stones."
+      },
+      {
+        topic: "Chapter 6: Mixtures & Separation",
+        q: "Which of these is a way plastic pollution harms the environment?",
+        options: ["Harms marine animals and causes land/water pollution", "Makes the air turn into solid", "Dissolves into sugar water", "Helps plants grow faster"],
+        answer: "Harms marine animals and causes land/water pollution",
+        exp: "Plastic waste pollutes land and water and can injure or choke marine animals."
+      },
+      {
+        topic: "Mid-Year Review: Forces",
+        q: "An object slides across a wooden table and slows down to a stop. What force causes this?",
+        options: ["Friction", "Gravity", "Magnet", "Pull"],
+        answer: "Friction",
+        exp: "Friction is the force between surfaces that opposes motion and slows objects down."
+      },
+      {
+        topic: "Mid-Year Review: Forces",
+        q: "In which direction does friction act on a moving object?",
+        options: ["Opposite to the direction of movement", "In the same direction as movement", "Straight up into the air", "In circles"],
+        answer: "Opposite to the direction of movement",
+        exp: "Friction always acts in the opposite direction to motion."
+      },
+      {
+        topic: "Mid-Year Review: Living Things",
+        q: "Which group correctly classifies: Caterpillar, Book, and Metal clip?",
+        options: ["Living: Caterpillar | Once alive: Book | Never lived: Metal clip", "Living: Book | Once alive: Caterpillar | Never lived: Metal clip", "Living: Caterpillar | Once alive: Metal clip | Never lived: Book", "All are living things"],
+        answer: "Living: Caterpillar | Once alive: Book | Never lived: Metal clip",
+        exp: "Caterpillar is alive; paper in a book comes from trees (once alive); metal clip never lived."
+      },
+      {
+        topic: "Mid-Year Review: Plants & Fair Testing",
+        q: "Tom tests Plant A (with roots) and Plant B (no roots) using the same leaf count, size, and water. Which scientific skill is this?",
+        options: ["Fair testing", "Identifying pattern", "Research", "Guessing"],
+        answer: "Fair testing",
+        exp: "Changing only one variable (roots) while keeping all other conditions the same is fair testing."
+      },
+      {
+        topic: "Mid-Year Review: Plants & Fair Testing",
+        q: "In Tom's experiment, the water level for Plant A drops while Plant B stays the same. What is the function of roots?",
+        options: ["To absorb water", "To make sunlight", "To produce plastic", "To repel magnets"],
+        answer: "To absorb water",
+        exp: "Roots absorb water from the container, causing the water level to drop."
+      },
+      {
+        topic: "Mid-Year Review: Magnets",
+        q: "What happens when the South (S) pole of a magnet is placed near the North (N) pole of another magnet?",
+        options: ["They attract each other", "They repel each other", "Nothing happens", "They melt"],
+        answer: "They attract each other",
+        exp: "Unlike poles (N and S) attract each other."
+      },
+      {
+        topic: "Mid-Year Review: Magnets",
+        q: "Jane brings a bar magnet near an object and it moves towards the magnet. Jane says the object MUST be a magnet. Is she right?",
+        options: ["No, it could be a magnetic material like steel or iron", "Yes, only magnets move", "Yes, because plastic is magnetic", "No, because magnets only repel"],
+        answer: "No, it could be a magnetic material like steel or iron",
+        exp: "Attraction happens between a magnet and another magnet OR a magnetic material (like steel/iron). Only repulsion proves an object is a magnet."
+      }
+    ];
+
+    // 4. Quiz State
+    let currentQuestions = [];
+    let score = 0;
+    let answeredCount = 0;
+    let timeLeft = 3600; // 60 minutes in seconds
+    let timerInterval = null;
+    let quizFinished = false;
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function initQuiz() {
+      clearInterval(timerInterval);
+      score = 0;
+      answeredCount = 0;
+      timeLeft = 3600;
+      quizFinished = false;
+
+      document.getElementById('summaryCard').classList.remove('show');
+      updateStatsUI();
+
+      // Shuffle questions and their options
+      currentQuestions = shuffleArray(QUESTION_BANK).map((item, idx) => ({
+        ...item,
+        id: idx,
+        shuffledOptions: shuffleArray(item.options),
+        userAnswered: false
+      }));
+
+      renderQuiz();
+      startTimer();
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quizList');
+      container.innerHTML = '';
+
+      currentQuestions.forEach((qObj, index) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = `q-card-${index}`;
+
+        const meta = document.createElement('div');
+        meta.className = 'q-meta';
+        meta.innerHTML = `<span>Question ${index + 1} of ${currentQuestions.length}</span><span>${qObj.topic}</span>`;
+
+        const qText = document.createElement('div');
+        qText.className = 'q-text';
+        qText.textContent = qObj.q;
+
+        const optsGrid = document.createElement('div');
+        optsGrid.className = 'options-grid';
+
+        qObj.shuffledOptions.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'opt-btn';
+          btn.textContent = opt;
+          btn.onclick = () => handleAnswer(index, opt, btn);
+          optsGrid.appendChild(btn);
+        });
+
+        const feedback = document.createElement('div');
+        feedback.className = 'q-feedback';
+        feedback.id = `q-fb-${index}`;
+
+        card.appendChild(meta);
+        card.appendChild(qText);
+        card.appendChild(optsGrid);
+        card.appendChild(feedback);
+        container.appendChild(card);
+      });
+    }
+
+    function handleAnswer(qIndex, selectedOpt, clickedBtn) {
+      if (quizFinished) return;
+      const qObj = currentQuestions[qIndex];
+      if (qObj.userAnswered) return;
+
+      qObj.userAnswered = true;
+      answeredCount++;
+
+      const card = document.getElementById(`q-card-${qIndex}`);
+      const buttons = card.querySelectorAll('.opt-btn');
+      const feedback = document.getElementById(`q-fb-${qIndex}`);
+
+      const isCorrect = selectedOpt === qObj.answer;
+      if (isCorrect) {
+        score++;
+        clickedBtn.classList.add('correct');
+        feedback.className = 'q-feedback show ok';
+        feedback.innerHTML = `<strong>✓ Correct!</strong> ${qObj.exp}`;
+      } else {
+        clickedBtn.classList.add('wrong');
+        buttons.forEach(b => {
+          if (b.textContent === qObj.answer) b.classList.add('correct');
+        });
+        feedback.className = 'q-feedback show bad';
+        feedback.innerHTML = `<strong>✗ Incorrect.</strong> Correct answer: <strong>${qObj.answer}</strong>. ${qObj.exp}`;
+      }
+
+      buttons.forEach(b => b.disabled = true);
+      updateStatsUI();
+
+      if (answeredCount === currentQuestions.length) {
+        finishQuiz();
+      }
+    }
+
+    function updateStatsUI() {
+      document.getElementById('scoreDisplay').textContent = `🏆 Score: ${score} / ${QUESTION_BANK.length}`;
+      document.getElementById('progressDisplay').textContent = `📝 Answered: ${answeredCount} / ${QUESTION_BANK.length}`;
+    }
+
+    function startTimer() {
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          finishQuiz();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      document.getElementById('timerDisplay').textContent =
+        `⏱️ ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function finishQuiz() {
+      if (quizFinished) return;
+      quizFinished = true;
+      clearInterval(timerInterval);
+
+      const total = currentQuestions.length;
+      const pct = Math.round((score / total) * 100);
+      let grade = 'Keep Practicing';
+      if (pct >= 90) grade = 'A+ (Excellent!)';
+      else if (pct >= 80) grade = 'A (Great Job!)';
+      else if (pct >= 70) grade = 'B (Good!)';
+      else if (pct >= 60) grade = 'C (Fair)';
+
+      document.getElementById('summaryGrade').textContent = `${pct}% — ${grade}`;
+      document.getElementById('summaryText').textContent =
+        `You scored ${score} out of ${total} questions.`;
+      document.getElementById('summaryCard').classList.add('show');
+      document.getElementById('summaryCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Initialize Quiz on load
+    window.onload = function () {
+      initQuiz();
+    };
+  </script>
+</body>
+</html>
